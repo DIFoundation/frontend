@@ -18,7 +18,7 @@ const supportedNetworks = isMainnet ? mainnetNetworks : testnetNetworks;
 
 // 1. Get projectId at https://cloud.reown.com
 // You'll need to get your own project ID from WalletConnect Cloud
-const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "a9fbadc760baa309220363ec867b732e";
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
 
 // 2. Create a metadata object
 const metadata = {
