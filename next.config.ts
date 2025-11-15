@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import withPWA from "next-pwa";
+import { withSentryConfig } from "@sentry/nextjs";
 
 /**
  * 3. Bundle Analysis
@@ -108,4 +109,6 @@ const withPWAConfigured = withPWA({
   skipWaiting: true,
 });
 
-export default withPWAConfigured(nextConfig);
+export default withSentryConfig(withPWAConfigured(nextConfig), {
+  silent: true,
+});

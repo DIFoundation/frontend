@@ -14,6 +14,7 @@
   "dependencies": {
     "@reown/appkit": "^1.8.13",
     "@reown/appkit-adapter-wagmi": "^1.8.13",
+    "@sentry/nextjs": "^10.25.0",
     "@tanstack/react-query": "^5.90.6",
     "lucide-react": "^0.552.0",
     "next": "16.0.1",
