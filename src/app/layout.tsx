@@ -16,6 +16,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Ambience Chat - Decentralized Onchain Messaging",
   description: "Experience the future of messaging with Ambience — a fully decentralized chat application where every message is stored onchain, ensuring immutability, transparency, and true ownership. Built on Base blockchain.",
+  manifest: "/manifest.json",
+  themeColor: "#2563eb",
 };
 
 export default function RootLayout({

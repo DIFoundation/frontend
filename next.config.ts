@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import withPWA from "next-pwa";
 
 /**
  * 3. Bundle Analysis
@@ -101,4 +102,10 @@ const nextConfig: NextConfig = {
   turbopack: {},
 };
 
-export default nextConfig;
+const withPWAConfigured = withPWA({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+});
+
+export default withPWAConfigured(nextConfig);
