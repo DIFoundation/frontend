@@ -18,6 +18,27 @@ export const metadata: Metadata = {
   description: "Experience the future of messaging with Ambience — a fully decentralized chat application where every message is stored onchain, ensuring immutability, transparency, and true ownership. Built on Base blockchain.",
   manifest: "/manifest.json",
   themeColor: "#2563eb",
+  openGraph: {
+    title: "Ambience Chat",
+    description: "Decentralized onchain messaging on Base",
+    url: "https://ambience-chat.vercel.app",
+    siteName: "Ambience Chat",
+    images: [
+      {
+        url: "/globe.svg",
+        width: 1200,
+        height: 630,
+        alt: "Ambience Chat",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ambience Chat",
+    description: "Decentralized onchain messaging on Base",
+    images: ["/globe.svg"],
+  },
 };
 
 export default function RootLayout({
