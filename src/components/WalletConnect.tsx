@@ -8,6 +8,7 @@ import { Wallet, ChevronDown, LogOut, Copy, Check } from "lucide-react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { usePlausible } from "next-plausible";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function WalletConnect() {
   const [mounted, setMounted] = useState(false);
@@ -172,44 +173,12 @@ export default function WalletConnect() {
     return (
       <button
         onClick={handleConnect}
-        disabled={isConnecting}
-        className={`px-6 py-2 flex items-center gap-2 rounded-full font-medium text-white transition-all duration-200 ${
-          isConnecting
-            ? "bg-blue-400 cursor-not-allowed"
-            : "bg-gradient-to-r from-blue-600 to-indigo-600 hover:shadow-lg hover:scale-105"
-        }`}
+        className="px-6 py-2 flex items-center gap-2 rounded-full font-medium text-white transition-all duration-200 bg-gradient-to-r from-blue-600 to-indigo-600 hover:shadow-lg hover:scale-105"
       >
-        {isConnecting ? (
-          <>
-            {/* Spinner */}
-            <svg
-              className="animate-spin h-5 w-5 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              ></circle>
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-              ></path>
-            </svg>
-            Connecting...
-          </>
-        ) : (
-          <>
-            <Wallet className="w-5 h-5" />
-            Connect Wallet
-          </>
-        )}
+        <>
+          <Wallet className="w-5 h-5" />
+          Connect Wallet
+        </>
       </button>
     );
   }
@@ -225,102 +194,67 @@ export default function WalletConnect() {
         <ChevronDown className="w-4 h-4" />
       </button>
 
-      {isDropdownOpen && (
-        <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-slate-800 rounded-xl shadow-2xl z-50 border border-slate-200 dark:border-slate-700 overflow-hidden">
-          <div className="p-4 border-b border-slate-200 dark:border-slate-700">
-            <div className="flex items-center gap-3">
-              {getWalletIcon()}
-              <div className="flex-1 min-w-0">
-                <p className="font-semibold text-slate-900 dark:text-slate-100 text-sm truncate">
-                  {getWalletName()}
-                </p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
-                  {truncateAddress(address)}
-                </p>
+      <AnimatePresence>
+        {isDropdownOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            transition={{ duration: 0.15 }}
+            className="absolute right-0 mt-2 w-64 bg-white dark:bg-slate-800 rounded-xl shadow-2xl z-50 border border-slate-200 dark:border-slate-700 overflow-hidden"
+          >
+            <div className="p-4 border-b border-slate-200 dark:border-slate-700">
+              <div className="flex items-center gap-3">
+                {getWalletIcon()}
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-slate-900 dark:text-slate-100 text-sm truncate">
+                    {getWalletName()}
+                  </p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+                    {truncateAddress(address)}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="p-2">
-            <button
-              onClick={handleCopyAddress}
-              className="w-full flex items-center gap-3 px-3 py-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-sm transition-colors"
-            >
-              {copied ? (
-                <>
-                  <Check className="w-4 h-4" />
-                  Copied!
-                </>
-              ) : (
-                <>
-                  <Copy className="w-4 h-4" />
-                  Copy Address
-                </>
-              )}
-            </button>
-            <a
-              href={`https://basescan.org/address/${address}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 px-3 py-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-sm transition-colors"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            <div className="p-2">
+              <button
+                onClick={handleCopyAddress}
+                className="w-full flex items-center gap-3 px-3 py-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-sm transition-colors"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                />
-              </svg>
-              View on Explorer
-            </a>
-            <button
-              onClick={handleDisconnect}
-              disabled={isDisconnecting}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm transition-colors mt-1 ${
-                isDisconnecting
-                  ? "cursor-not-allowed opacity-70 bg-red-100 dark:bg-red-900/20 text-red-500"
-                  : "text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20"
-              }`}
-            >
-              {isDisconnecting ? (
-                <>
-                  <svg
-                    className="animate-spin w-4 h-4 text-red-500"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                    ></path>
-                  </svg>
-                  Disconnecting...
-                </>
-              ) : (
-                <>
-                  <LogOut className="w-4 h-4" />
-                  Disconnect
-                </>
-              )}
-            </button>
-          </div>
-        </div>
-      )}
+                {copied ? (
+                  <>
+                    <Check className="w-4 h-4" />
+                    Copied!
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4" />
+                    Copy Address
+                  </>
+                )}
+              </button>
+              <a
+                href={`https://basescan.org/address/${address}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-3 py-2 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-sm transition-colors"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+                View on Explorer
+              </a>
+              <button
+                onClick={handleDisconnect}
+                className="w-full flex items-center gap-3 px-3 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg text-sm transition-colors mt-1"
+              >
+                <LogOut className="w-4 h-4" />
+                Disconnect
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
