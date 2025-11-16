@@ -3,6 +3,7 @@
 import Link from "next/link";
 import WalletConnect from "@/components/WalletConnect";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -82,7 +83,12 @@ export default function Home() {
         </div>
         
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
+          <motion.div
+            className="text-center max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35 }}
+          >
             <div className="inline-flex items-center px-4 py-2 rounded-full bg-blue-100 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 mb-8">
               <span className="text-sm font-medium text-blue-700 dark:text-blue-300">
                 ✨ Decentralized • Onchain • Censorship-Resistant
@@ -101,7 +107,12 @@ export default function Home() {
               ensuring immutability, transparency, and true ownership.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.3 }}
+            >
               <button
                 onClick={() => setShowComingSoon(true)}
                 className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full font-semibold text-lg hover:shadow-2xl hover:scale-105 transition-all duration-200 flex items-center gap-2"
@@ -117,11 +128,17 @@ export default function Home() {
               >
                 Learn More
               </a>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Hero Visual */}
-          <div className="mt-20 relative">
+          <motion.div
+            className="mt-20 relative"
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.35 }}
+          >
             <div className="max-w-5xl mx-auto bg-gradient-to-br from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 p-8 sm:p-12">
               <div className="space-y-4">
                 <div className="flex items-center gap-3 pb-4 border-b border-slate-200 dark:border-slate-700">
@@ -136,22 +153,22 @@ export default function Home() {
                 <div className="space-y-3">
                   <div className="flex gap-3">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-500"></div>
-                    <div className="flex-1 bg-slate-100 dark:bg-slate-800 rounded-2xl rounded-tl-none p-4">
+                    <motion.div className="flex-1 bg-slate-100 dark:bg-slate-800 rounded-2xl rounded-tl-none p-4" initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25 }}>
                       <p className="text-slate-900 dark:text-slate-100">Welcome to the future of messaging! 🚀</p>
                       <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Onchain • Immutable</p>
-                    </div>
+                    </motion.div>
                   </div>
                   <div className="flex gap-3 justify-end">
-                    <div className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl rounded-tr-none p-4 text-white max-w-md ml-auto">
+                    <motion.div className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl rounded-tr-none p-4 text-white max-w-md ml-auto" initial={{ opacity: 0, x: 10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.25 }}>
                       <p>This is incredible! Every message is stored on the blockchain. True decentralization! 💎</p>
                       <p className="text-xs text-blue-100 mt-1">Onchain • Immutable</p>
-                    </div>
+                    </motion.div>
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500"></div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
