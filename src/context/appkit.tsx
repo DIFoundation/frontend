@@ -2,7 +2,7 @@
 "use client";
 import { createAppKit } from "@reown/appkit/react";
 import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
-import { base, baseSepolia } from "@reown/appkit/networks";
+import { base, baseSepolia, celo, celoSepolia } from "@reown/appkit/networks";
 import type { AppKitNetwork } from "@reown/appkit/networks";
 import { ReactNode } from "react";
 
@@ -10,8 +10,8 @@ import { ReactNode } from "react";
 const isMainnet = process.env.NEXT_PUBLIC_NETWORK === 'mainnet';
 
 // Dynamic network configuration based on environment
-const mainnetNetworks: [AppKitNetwork, ...AppKitNetwork[]] = [base];
-const testnetNetworks: [AppKitNetwork, ...AppKitNetwork[]] = [baseSepolia];
+const mainnetNetworks: [AppKitNetwork, ...AppKitNetwork[]] = [base, celo];
+const testnetNetworks: [AppKitNetwork, ...AppKitNetwork[]] = [baseSepolia, celoSepolia];
 
 // Use appropriate networks based on environment (always ensure at least one network)
 const supportedNetworks = isMainnet ? mainnetNetworks : testnetNetworks;
