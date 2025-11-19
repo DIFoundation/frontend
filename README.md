@@ -30,8 +30,8 @@ This project demonstrates how to build a fully onchain messaging platform where:
 - **Next.js 16** - React framework for production
 - **TypeScript** - Type-safe development
 - **Tailwind CSS v4** - Utility-first CSS framework
-- **wagmi** - React hooks for Ethereum (to be added)
-- **viem** - TypeScript Ethereum interface (to be added)
+- **Wagmi** - React hooks for Ethereum (to be added)
+- **Viem** - TypeScript Ethereum interface (to be added)
 - **RainbowKit/ConnectKit** - Wallet connection UI (to be added)
 
 ### Blockchain
@@ -48,7 +48,7 @@ This project demonstrates how to build a fully onchain messaging platform where:
 │   (Next.js)     │
 └────────┬────────┘
          │
-         ├─── Web3 Provider (wagmi/viem)
+         ├─── Web3 Provider (Wagmi/Viem)
          │
 ┌────────▼────────┐
 │  Smart Contract │
