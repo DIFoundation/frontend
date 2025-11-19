@@ -5,6 +5,7 @@ import WalletConnect from "@/components/WalletConnect";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import ThemeToggle from "@/components/ThemeToggle";
+import { WalletErrorBoundary } from "@/components/errors/WalletErrorBoundary";
 
 export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -39,11 +40,15 @@ export default function Home() {
                 Profile
               </Link>
               <ThemeToggle />
-              <WalletConnect />
+              <WalletErrorBoundary>
+                <WalletConnect />
+              </WalletErrorBoundary>
             </div>
             <div className="md:hidden flex items-center gap-2">
               <ThemeToggle />
-              <WalletConnect />
+              <WalletErrorBoundary>
+                <WalletConnect />
+              </WalletErrorBoundary>
               <button
                 aria-label="Open menu"
                 aria-expanded={mobileOpen}

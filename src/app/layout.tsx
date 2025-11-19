@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/components/Providers";
 import PlausibleProvider from "next-plausible";
+import { ErrorBoundaryWrapper } from "@/components/ErrorBoundaryWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,7 +55,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <PlausibleProvider domain={plausibleDomain} trackOutboundLinks>
-          <Providers>{children}</Providers>
+          <ErrorBoundaryWrapper>
+            <Providers>{children}</Providers>
+          </ErrorBoundaryWrapper>
         </PlausibleProvider>
       </body>
     </html>
