@@ -22,6 +22,7 @@
     "@reown/appkit-adapter-wagmi": "^1.8.13",
     "@sentry/nextjs": "^10.25.0",
     "@tanstack/react-query": "^5.90.10",
+    "@web3-storage/w3up-client": "^17.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.24",
@@ -37,7 +38,8 @@
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.4.0",
     "viem": "^2.38.6",
-    "wagmi": "^2.19.2"
+    "wagmi": "^2.19.2",
+    "web3.storage": "^4.5.5"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^4.1.2",
