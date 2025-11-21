@@ -1,30 +1,45 @@
 import { formatDistanceToNow } from 'date-fns';
 import { useEnsName } from 'wagmi';
 import { shortenAddress } from '@/lib/utils';
-import type { Message } from '@/types/message';
+import type { Message, Reaction } from '@/types/message';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
+import { useReactions } from '@/hooks/useReactions';
+import { ReactionButton } from './ReactionButton';
+import { EmojiPicker } from './EmojiPicker';
+import { useState } from 'react';
 
 interface MessageProps {
   message: Message;
   isCurrentUser?: boolean;
   className?: string;
+  onReaction?: (emoji: string) => Promise<void>;
+  isReacting?: boolean;
 }
 
-export function Message({ message, isCurrentUser = false, className }: MessageProps) {
+export function Message({ message, isCurrentUser = false, className, onReaction, isReacting = false }: MessageProps) {
   const { data: ensName } = useEnsName({
     address: typeof message.sender === 'string' ? (message.sender as `0x${string}`) : undefined,
   });
+  const [showReactionPicker, setShowReactionPicker] = useState(false);
+  const { toggleReaction, isLoading } = useReactions();
 
   const senderDisplay = typeof message.sender === 'string' 
     ? ensName || shortenAddress(message.sender)
     : message.sender.ensName || message.sender.displayName || shortenAddress(message.sender.address);
 
   const senderInitial = senderDisplay?.charAt(0).toUpperCase() || 'U';
+
+  const handleReaction = async (emoji: string) => {
+    if (onReaction) {
+      await onReaction(emoji);
+    }
+    setShowReactionPicker(false);
+  };
   
   return (
     <div className={cn(
-      'flex gap-3 p-3 rounded-lg',
+      'group relative flex gap-3 p-3 rounded-lg',
       isCurrentUser ? 'justify-end' : 'justify-start',
       className
     )}>
@@ -46,7 +61,30 @@ export function Message({ message, isCurrentUser = false, className }: MessagePr
             {formatDistanceToNow(new Date(message.timestamp), { addSuffix: true })}
           </span>
         </div>
-        <p className="text-sm">{message.content}</p>
+        <p className="text-sm mb-2">{message.content}</p>
+        
+        {/* Reactions */}
+        {message.reactions && message.reactions.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-2">
+            {message.reactions.map((reaction) => (
+              <ReactionButton
+                key={reaction.emoji}
+                reaction={reaction}
+                onReaction={handleReaction}
+              />
+            ))}
+          </div>
+        )}
+        
+        {/* Reaction picker */}
+        <div className={cn(
+          'absolute -bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity',
+          'flex items-center gap-1 bg-background rounded-full p-1 shadow-sm border',
+          isCurrentUser ? 'left-2' : 'right-2'
+        )}>
+          <EmojiPicker onSelect={handleReaction} />
+        </div>
+        
         {message.edited && (
           <div className="text-xs mt-1 opacity-70 italic">edited</div>
         )}
